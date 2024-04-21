@@ -30,7 +30,7 @@
     </head>
     <body>
         <p class="aligncenter">
-            <img src="mylogo.png" alt="логотип Альтернативы">
+            <img src="img/mylogo.png" alt="логотип Альтернативы">
         </p>
         <form class="aligncenter">
             <label for="login">логин</label><input type="text" id="login">
