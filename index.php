@@ -1,40 +1,21 @@
 <?php
 /*
- *  точка входа ЛК
- *  запускает AdminController
+ *  точка входа для личного кабинета
+ *  1. подключает настройки
+ *  2. подключает автолоадер
+ *  3. подключает композер
+ *  4. запускает проверку авторизации
+ *  5. запускает главный контроллер
  */
-    #header('Content-Type: text/html; charset=utf8');
-    #$title='ФПК АЛЬТЕРНАТИВА: личный кабинет клиента';
-    #define('VIEW_BACKGROUND','#f0e3c5');        
-?>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>ФПК АЛЬТЕРНАТИВА: личный кабинет клиента</title>
-        <!--
-        <link rel="stylesheet" type="text/css" href="https://bootswatch.com/5/sandstone/bootstrap.min.css">
-        -->
-        <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="css/_bootswatch.scss">
-        <link rel="stylesheet" type="text/css" href="css/_variables.scss">
-        <style>
-            body{
-            background-color: #f0e3c5; /* Цвет фона веб-страницы */
-            } 
-            .aligncenter {
-                text-align: center;
-            }
-        </style>
-    </head>
-    <body>
-        <p class="aligncenter">
-            <img src="img/mylogo.png" alt="логотип Альтернативы">
-        </p>
-        <form class="aligncenter">
-            <label for="login">логин</label><input type="text" id="login">
-            <label for="password">пароль</label><input type="password" id="password">
-        </form>
-    </body>
-</html>
+header('Content-Type: text/html; charset=utf8');
+
+include_once "app/Settings.php";
+
+include_once "{$_SERVER['DOCUMENT_ROOT']}/".WORK_FOLDER."/app/Atoloader.php";
+spl_autoload_register([new autoloader(), 'getClass']);
+
+require_once "{$_SERVER['DOCUMENT_ROOT']}/AltTech/vendor/autoload.php";
+
+(new SessionChecker())->checkSession();
+
+(new MainController())->run();
