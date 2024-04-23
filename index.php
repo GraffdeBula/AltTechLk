@@ -11,11 +11,17 @@ header('Content-Type: text/html; charset=utf8');
 
 include_once "app/Settings.php";
 
-include_once "{$_SERVER['DOCUMENT_ROOT']}/".WORK_FOLDER."/app/Atoloader.php";
-spl_autoload_register([new autoloader(), 'getClass']);
+#echo(WEB_ROOT);
+include_once WORK_ROOT."/app/Autoloader.php";
+spl_autoload_register([new Autoloader(), 'getClass']);
 
-require_once "{$_SERVER['DOCUMENT_ROOT']}/AltTech/vendor/autoload.php";
+require_once WEB_ROOT."/AltTech/vendor/autoload.php";
 
-(new SessionChecker())->checkSession();
+$whoops = new \Whoops\Run;
+$whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
+$whoops->register();
 
-(new MainController())->run();
+#(new Logger(''))->logToFile('loaded');
+#(new SessionChecker())->checkSession();
+
+(new AppMainCtrl())->actionIndex();
